@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.fpml.org/2005/FpML-4-2" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="index" type="fpml:indexType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:element name="FpML" type="fpml:FpMLType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:element name="adjustableDate" type="fpml:adjustableDateType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:element name="amount" type="xs:float"/>
+  <xs:element name="clearanceSystem" type="fpml:clearanceSystemType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:element name="instrumentId" type="fpml:instrumentIdType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:element name="multiplier" type="xs:byte"/>
+  <xs:element name="maturity" type="xs:date"/>
+  <xs:element name="currency" type="xs:string"/>
+  <xs:element name="productType" type="fpml:productTypeType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:element name="buyerPartyReference" type="fpml:buyerPartyReferenceType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:element name="sellerPartyReference" type="fpml:sellerPartyReferenceType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:element name="exchangeId" type="fpml:exchangeIdType" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+  <xs:complexType name="partyTradeIdentifierType">
+    <xs:sequence>
+      <xs:element type="fpml:partyReferenceType" name="partyReference" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="fpml:versionedTradeIdType" name="versionedTradeId" maxOccurs="unbounded" minOccurs="0" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="fpml:linkIdType" name="linkId" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="ns:tradeCorrelationSet" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FpMLType">
+    <xs:sequence>
+      <xs:element type="fpml:headerType" name="header" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="fpml:tradeType" name="trade" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="fpml:partyType" name="party" maxOccurs="unbounded" minOccurs="0" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="ns:person" maxOccurs="unbounded" minOccurs="0" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="ibmlVersion"/>
+    <xs:attribute type="xs:string" name="version"/>
+  </xs:complexType>
+  <xs:complexType name="partyReferenceType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="href"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="messageIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:int">
+        <xs:attribute type="xs:anyURI" name="messageIdScheme"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="instrumentIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:anyURI" name="instrumentIdScheme" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="versionedTradeIdType">
+    <xs:sequence>
+      <xs:element type="fpml:tradeIdType" name="tradeId" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="xs:byte" name="version"/>
+      <xs:element type="xs:date" name="effectiveDate"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="accountType">
+    <xs:sequence>
+      <xs:element type="fpml:accountIdType" name="accountId" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id"/>
+  </xs:complexType>
+  <xs:complexType name="buyerPartyReferenceType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="href"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="headerType">
+    <xs:sequence>
+      <xs:element type="fpml:messageIdType" name="messageId" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="xs:string" name="sendBy"/>
+      <xs:element type="xs:dateTime" name="creationTimestamp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="indexType">
+    <xs:sequence>
+      <xs:element type="fpml:instrumentIdType" name="instrumentId" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="xs:string" name="description"/>
+      <xs:element type="xs:string" name="currency"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:anyURI" name="tradeIdScheme" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="accountIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:anyURI" name="accountIdScheme"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="linkIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="linkIdScheme"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="partyIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:anyURI" name="partyIdScheme" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="tradeHeaderType">
+    <xs:sequence>
+      <xs:element type="fpml:partyTradeIdentifierType" name="partyTradeIdentifier" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="fpml:tradeDateType" name="tradeDate" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="ns:tradeTimestamp" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+      <xs:element ref="ns:tradeType" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="adjustableDateType">
+    <xs:sequence>
+      <xs:element type="xs:date" name="unadjustedDate"/>
+      <xs:element type="fpml:dateAdustmentsType" name="dateAdustments" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="partyType">
+    <xs:sequence>
+      <xs:element type="fpml:partyIdType" name="partyId" maxOccurs="unbounded" minOccurs="0" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="fpml:accountType" name="account" minOccurs="0" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="xs:string" name="partyName" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="dateAdustmentsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="businessDayConvention"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeDateType">
+    <xs:simpleContent>
+      <xs:extension base="xs:date">
+        <xs:attribute type="xs:string" name="id"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="sellerPartyReferenceType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="href"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="tradeType">
+    <xs:sequence>
+      <xs:element type="fpml:tradeHeaderType" name="tradeHeader" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="ns:futureContract" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="productTypeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:anyURI" name="productTypeScheme" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="clearanceSystemType">
+    <xs:simpleContent>
+      <xs:extension base="xs:int">
+        <xs:attribute type="xs:anyURI" name="clearanceSystemScheme"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="exchangeIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:int">
+        <xs:attribute type="xs:anyURI" name="exchangeIdScheme"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>

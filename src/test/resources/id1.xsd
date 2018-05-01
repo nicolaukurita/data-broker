@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ibml.jpmorgan.com/2005" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="person" type="ns:personType" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+  <xs:element name="tradeCorrelationSet" type="ns:tradeCorrelationSetType" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+  <xs:element name="tradeType" type="ns:tradeTypeType" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+  <xs:element name="futureContract" type="ns:futureContractType"  xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+  <xs:element name="tradeTimestamp" type="xs:string"/>
+  <xs:complexType name="tradeCorrelationType">
+    <xs:sequence>
+      <xs:element type="ns:correlationReasonCdType" name="correlationReasonCd" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+      <xs:element type="ns:linkSetType" name="linkSet" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:long">
+        <xs:attribute type="xs:anyURI" name="tradeIdScheme"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="linkType">
+    <xs:sequence>
+      <xs:element type="ns:tradeIdType" name="tradeId" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeCorrelationSetType">
+    <xs:sequence>
+      <xs:element type="ns:tradeCorrelationType" name="tradeCorrelation" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="settlementDateType">
+    <xs:sequence>
+      <xs:element ref="fpml:adjustableDate" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="settlementAmountType">
+    <xs:sequence>
+      <xs:element ref="fpml:currency" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:amount" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="futureType">
+    <xs:sequence>
+      <xs:element ref="fpml:instrumentId" maxOccurs="unbounded" minOccurs="0" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:currency" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:exchangeId" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:clearanceSystem" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:multiplier" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:maturity" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:index" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="personType">
+    <xs:sequence>
+      <xs:element type="ns:personIdType" name="personId" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="futureContractType">
+    <xs:sequence>
+      <xs:element ref="fpml:productType" maxOccurs="unbounded" minOccurs="0" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:buyerPartyReference" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element ref="fpml:sellerPartyReference" xmlns:fpml="http://www.fpml.org/2005/FpML-4-2"/>
+      <xs:element type="xs:float" name="deliveryPrice"/>
+      <xs:element type="xs:float" name="numberOfContracts"/>
+      <xs:element type="xs:string" name="settlementType"/>
+      <xs:element type="ns:settlementDateType" name="settlementDate" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+      <xs:element type="ns:settlementAmountType" name="settlementAmount" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+      <xs:element type="ns:futureType" name="future" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeTypeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:anyURI" name="tradeTypeScheme"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="personIdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:int">
+        <xs:attribute type="xs:anyURI" name="personIdScheme" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="linkSetType">
+    <xs:sequence>
+      <xs:element type="ns:linkType" name="link" xmlns:ns="http://ibml.jpmorgan.com/2005"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="correlationReasonCdType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:anyURI" name="codeScheme"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>
